@@ -112,7 +112,13 @@ def login(user: schemas.UserLogin, db: Session = Depends(get_db)):
 
     token = create_access_token({"sub": str(db_user.id)})
 
-    return {"access_token": token}
+    return {
+        "access_token": token,
+        "user": {
+            "full_name": db_user.full_name,
+            "email": db_user.email
+        }
+    }
 
 # Create Expense
 @app.post("/expenses")

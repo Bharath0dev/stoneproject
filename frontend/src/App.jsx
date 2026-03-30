@@ -3,6 +3,8 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 import AuthPage from "./pages/AuthPage";
 import HomePage from "./pages/HomePage";
+import ProfilePageWrapper from "./pages/ProfilePage";
+import ProfilePage from "./pages/ProfilePage";
 
 // ✅ Protected Route component (ADD HERE)
 const ProtectedRoute = ({ children }) => {
@@ -24,6 +26,7 @@ function App() {
           // </ProtectedRoute>
         }
       />
+      <Route path="/profile" element={<ProfilePage />} />
     </Routes>
   );
 }

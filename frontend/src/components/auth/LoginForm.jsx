@@ -96,17 +96,65 @@ const LoginForm = ({ onSwitch }) => {
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setError("");
+  //   if (!form.email.trim())  { setError("Please enter your email.");    return; }
+  //   if (!form.password)      { setError("Please enter your password."); return; }
+  //   setLoading(true);
+  //   try {
+  //     const res = await login(form);
+  //     localStorage.setItem("token",   res.data.access_token);
+  //     if (res.data.user) localStorage.setItem("st_user", JSON.stringify(res.data.user));
+  //     navigate("/home");
+  //   } catch (err) {
+  //     const msg = err?.response?.data?.detail;
+  //     setError(msg || "Invalid email or password. Please try again.");
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    if (!form.email.trim())  { setError("Please enter your email.");    return; }
-    if (!form.password)      { setError("Please enter your password."); return; }
+
+    if (!form.email.trim()) {
+      setError("Please enter your email.");
+      return;
+    }
+
+    if (!form.password) {
+      setError("Please enter your password.");
+      return;
+    }
+
     setLoading(true);
+
     try {
       const res = await login(form);
-      localStorage.setItem("token",   res.data.access_token);
-      if (res.data.user) localStorage.setItem("st_user", JSON.stringify(res.data.user));
+
+      const token = res.data.access_token;
+
+      // ✅ Store token
+      localStorage.setItem("token", token);
+
+      // ✅ Store user properly
+      if (res.data.user) {
+        localStorage.setItem("st_user", JSON.stringify(res.data.user));
+      } else {
+        // ⚠️ fallback (important)
+        localStorage.setItem(
+          "st_user",
+          JSON.stringify({
+            email: form.email,
+            full_name: form.email.split("@")[0] // temp name
+          })
+        );
+      }
+
       navigate("/home");
+
     } catch (err) {
       const msg = err?.response?.data?.detail;
       setError(msg || "Invalid email or password. Please try again.");

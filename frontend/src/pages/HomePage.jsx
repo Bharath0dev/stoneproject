@@ -324,9 +324,11 @@ const Modal = ({ open, onClose, title, children, footer }) => {
 };
 
 
+import { useNavigate } from "react-router-dom";
 
 // ── ProfileDropdown ───────────────────────────────────────────────────────────
 const ProfileDropdown = ({ onLogout, onAddIncome, onSetMonthlyBudget }) => {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const wrapRef = useRef(null);
 
@@ -372,7 +374,16 @@ const ProfileDropdown = ({ onLogout, onAddIncome, onSetMonthlyBudget }) => {
 
           {/* Menu items */}
           <div className="st-profile-menu">
-            <button className="st-profile-item" onClick={() => setOpen(false)}>
+            {/* <button className="st-profile-item" onClick={() => setOpen(false)}>
+              <span className="st-profile-item-icon">👤</span> My Profile
+            </button> */}
+            <button
+              className="st-profile-item"
+              onClick={() => {
+                setOpen(false);
+                navigate("/profile");
+              }}
+            >
               <span className="st-profile-item-icon">👤</span> My Profile
             </button>
             {/* <button className="st-profile-item" onClick={() => setOpen(false)}>
