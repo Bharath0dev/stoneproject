@@ -3,7 +3,8 @@ from sqlalchemy import Column, String, DateTime, Integer, ForeignKey, Numeric, D
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
-from database import Base
+# from database import Base
+from backend.database import Base
 
 class User(Base):
     __tablename__ = "users"
